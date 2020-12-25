@@ -1,5 +1,58 @@
 # Linux
 
+## 工作上经常用到的一些命令
+
+每一次总是记住一些没用的，所以就把工作上最长用的写一下了。
+
+```bash
+# 按照时间来排序，从最新的开始
+ll -t
+# 列出来XX开头的文件 比如 g开头的文件
+ll g*
+# 列出来XX结尾的文件 比如 后缀是md
+ll *md
+
+# 修改文件权限 r4w2e1 按照这个来记忆
+chmod 777 文件名
+chmod 755 文件名
+# 有时候一时半会根本不知道怎么记忆上面的数字，我经常用用户+权限
+-rw-r--r--  1 Chihokyo  staff    72K Dec  7 13:43 girl2.jpeg
+#我一般都是用给所有用户 
+chmod a+x 文件名 # 给所有用户增加x执行权限
+
+# 查看最近的20个使用过的命令历史记录
+history | tail -10
+```
+
+有时候会记不住sudo 和 su
+
+**sudo** Super User Do 超级用户do
+
+**su** Shift User 切换用户
+
+工作上最常用的就是 `sudo su 用户` 利用root权限切换用户。无需输入切换用户密码了。
+
+sudo su的含义就是要用root权限运行su命令，既然是用root权限运行su命令，那么就不需要输入切换到的用户的密码了。
+
+话说偶尔也会遇到`su-`和`su`。区别就是 su - 不会保留当前环境。就是切换到其他目录的感觉了。
+
+### 批量修改系列
+
+```bash
+# 把XXX全部修改成YYY
+rename 's/\.csv/\.txt/' *
+➜  /Users/Chihokyo/Code/javava git:(main) ✗ ll *g
+-rw-r--r--@ 1 Chihokyo  staff    72K Sep  4 16:47 girl.jpeg
+-rw-r--r--  1 Chihokyo  staff    72K Dec  7 13:43 girl2.jpeg
+➜  /Users/Chihokyo/Code/javava git:(main) ✗ rename 's/\.jpeg/\.jpg/' *
+➜  /Users/Chihokyo/Code/javava git:(main) ✗ ll *g
+-rw-r--r--@ 1 Chihokyo  staff    72K Sep  4 16:47 girl.jpg
+-rw-r--r--  1 Chihokyo  staff    72K Dec  7 13:43 girl2.jpg
+➜  /Users/Chihokyo/Code/javava git:(main) ✗
+```
+
+
+
 ## 个人觉得蛮好用的Linux网站
 
 鸟哥私房菜 http://linux.vbird.org/linux_basic/
