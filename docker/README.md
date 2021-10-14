@@ -1,8 +1,131 @@
+# Docker快速复习
+
+根据慕课网的入门教程新的一个快速复习
+
+压缩选ADD，单纯复制选COPY
+
+entrypoint和cmd都有
+
+entrypoint和cmd联合使用效果更佳
+
+```bash
+# 新建三个file，以便快速复制好创建镜像
+drwxr-xr-x   7 chin  staff   224B Sep 22 15:59 .
+drwxr-xr-x@ 17 chin  staff   544B Sep 21 16:35 ..
+-rw-r--r--   1 chin  staff    45B Sep 22 16:04 Dockerfile
+-rw-r--r--   1 chin  staff    45B Sep 22 15:59 Dockerfile-both
+-rw-r--r--   1 chin  staff    47B Sep 22 15:54 Dockerfile-cmd
+-rw-r--r--   1 chin  staff    60B Sep 22 15:55 Dockerfile-entry
+# 一个只有cmd，一个只有entry，一个俩都有
+docker image build -t demo-cmd .
+docker image build -t demo-entry .
+docker image build -t demo-both .
+# 使用cmd 可以自定义
+docker container run --rm -it demo-cmd
+docker container run --rm -it demo-cmd echo "hello"
+# 使用entry 无论怎么样都会执行
+docker container run --rm -it demo-entry
+# 两者配合
+FROM ubuntu:21.04
+ENTRYPOINT ["echo"]
+CMD []
+# 这样就可以在echo 出来CMD的参数了
+docker container run --rm -it demo-both thanks
+thanks
+```
+
+### 通过dockerfile来创建一个python flask框架
+
+① 创建app.py和Dockerfile
+
+*app.py*
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'hello WORLD!!'
+```
+
+*Dockerfile*
+
+```dockerfile
+FROM python:3.9.5-slim # 基础镜像 打粉底
+
+COPY app.py /src/app.py # 复制本地的到 容器内部/src/app.py 绝对路径
+
+RUN pip install flask # 运行指令 可以写很多
+
+WORKDIR /src # 默认进入的地方
+
+ENV FLASH=app.py # 环境变量
+
+EXPOSE 5000 # 暴露容器内端口
+
+CMD ["flask", "run", "-h", "0.0.0.0"] # 执行命令
+```
+
+②从镜像→容器
+
+```
+docker image build -t flask-demo .
+```
+
+③从容器开启
+
+```
+docker container run -d -p 5000:5000 flask-demo
+```
+
+DONE！！！🎉
+
+上面的只是低质量的，LOW版本的。
+
+容易发生改变的，可以写在后面，利用缓存。因为docker预测到前面发生改变，后面全部重新弄。
+
+```dockerfile
+FROM python:3.9.5-slim
+
+RUN pip install flask
+
+WORKDIR /src
+
+ENV FLASH=app.py
+
+COPY app.py /src/app.py # 比如这一句app容易改变，那么可以放在后面
+
+EXPOSE 5000
+
+CMD ["flask", "run", "-h", "0.0.0.0"]
+```
+
+## Docker网络问题
+
+隔离技术。
+
+首先docker网络有三种类型
+
+```
+bridge
+host
+none
+```
+
+## Docker-compose
+
+- 简单的一个`docker-compose.yml`文件
+- 一个命令行工具`docker-compose up/stop`
+
 # Docker初级入门
 
 写在前面的,这是根据自学的一些散装的心得和要素。因为是便于自己理解的，所以逻辑上可能会出现不是很清晰的问题。
 
-初级入门,不包含 Docker-compose 知识.
+初级入门,不包含 Docker-compose 知识
+
+[网站](https://dockertips.readthedocs.io/en/latest/docker-install/docker-intro.html)
 
 ## 1. Docker是什么？三要素是什么？
 
@@ -14,7 +137,7 @@
 
 **容器 Container** --容器（上面镜像实例化出来的玩意儿 可读可写
 
-**仓库 Repository ** --仓库就是放了一堆镜像的大库。
+**仓库 Repository** --仓库就是放了一堆镜像的大库。
 
 `docker run hello-world` 其实就是docker run 镜像，一切的开始。
 
@@ -442,3 +565,7 @@ docker run -it -p 8080:8080 --rm --name dockerize-vuejs-app-1 vuejs-cookbook/doc
 ```
 
 rm就是运行之后完删掉镜像
+
+## 一 社区版本
+
+社区版本，企业版已卖。
