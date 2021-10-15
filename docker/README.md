@@ -119,6 +119,23 @@ none
 - 简单的一个`docker-compose.yml`文件
 - 一个命令行工具`docker-compose up/stop`
 
+感觉本质上就是一个一次性搞定多个镜像的文件，以前都是一个个命令。
+
+**一般的操作系统+App安装 → docker镜像给你一次搞定 → 多个镜像 → docker-compose 给你一次搞定**
+
+```shell
+docker-compose up # 前台运行（可前台直接查看log）
+docker-compose up -d # 后台运行
+如果想在后台运行的时候查看log的话
+docker-compose logs # 查看log
+docker-compose logs -f # 持续查看
+```
+
+- 一定要取名 docker-compose.yml
+- 不取名 需要在命令指名 docker-compose **-f** 
+
+
+
 # Docker初级入门
 
 写在前面的,这是根据自学的一些散装的心得和要素。因为是便于自己理解的，所以逻辑上可能会出现不是很清晰的问题。
