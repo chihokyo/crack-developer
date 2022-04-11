@@ -39,3 +39,15 @@ https://github.com/carbon-app/carbon/blob/main/docs/README.cn.zh.md → 代码�
 https://www.npmjs.com → 在这里有所有的npm库 配合一下下面的使用。
 
 https://www.jsdelivr.com/esm → 推荐。全球专业加速CDN。
+
+## 好用的页面滚动显示动画工具
+
+就是滚动之后才出现你想要的东西的工具
+
+https://scrollrevealjs.org
+
+好用的第三方静态资源库。
+
+类似与上面的jsdelier
+
+https://cdnjs.com/
