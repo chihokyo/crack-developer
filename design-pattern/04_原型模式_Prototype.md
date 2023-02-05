@@ -4,12 +4,16 @@
 
 当我们想创建**多个一样的对象**的时候，在 Java 这种严格的 OOP 模式里，是不是只能 new 一个对象呢？是的！但是不 new 就产生不了对象了吗？原理是上的，但我们可以使用**克隆**技术！完成对一个对象的复制！
 
-原型模式不单是一种设计模式，也是一种编程范型。简单理解原型模式 Prototype：不根据类来生成实例，而是根据实例生成新的实例。也就说，如果需要一个和某对象一模一样的对象，那么就可以使用原型模式。
+原型模式不单是一种设计模式，也是一种编程范型。简单理解原型模式 Prototype：**不根据类来生成实例，而是根据实例生成新的实例**。也就说，如果需要一个和某对象一模一样的对象，那么就可以使用原型模式。
 
 - JS 天然自带 Prototype 属性
 - Java 可以用克隆
 
-> 不需要你自己 new，需要你克隆。
+> 不需要你自己 new，需要你对象的基础上生成新对象。
+>
+> **传统** 类 → 生成新对象
+>
+> **原型模式** 对象 → 生成新对象
 
 ## Java
 
@@ -113,3 +117,29 @@ public class Sheep implements Cloneable {
 }
 
 ```
+
+## JS 自带原型模式
+
+为什么这么说呢？因为当我们想创造一个对象的时候，在 JS 里完全可以使用**原型**来创建一个对象。
+
+什么叫使用原型对象呢？意思就是说我不用 new 就可以创建对象，可以在现有的对象身上，创造一个新对象。
+
+```js
+// 原有的对象
+const person = {
+  isHuman: false,
+  printIntroduction: function () {
+    console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);
+  },
+};
+
+// 新对象
+const me = Object.create(person);
+me.name = 'CHIN'; // name这个属性是me有的，person这个对象没有
+me.isHuman = true; // 重写继承过来的属性为true
+me.printIntroduction();
+```
+
+Object.create()方法是 ECMAScript 5 中新增的方法，这个方法用于创建一个新对象，使用现有的对象来提供新创建的对象的**proto**。被创建的对象会继承另一个对象的原型，在创建新对象时还可以指定一些属性。
+
+[这篇文章还是可以的 js 高级---Object.create()方法实现对象继承与创建新的 JavaScript 对象](https://blog.csdn.net/muzidigbig/article/details/89179459)
